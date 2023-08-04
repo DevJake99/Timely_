@@ -3,27 +3,59 @@
 // in the html.
 $(document).ready(function(){
   //get current date and time using Day.js
-  const currentDate = dayjs().format('MMMM, dddd D, YYYY');
+  const currentDate = dayjs().format('dddd, MMMM D, YYYY');
   $('#currentDay').text(currentDate);
 
 // Create time blocks for standard business hours (9-5)
-const workHours = Array.from({length: 9}, (_,index)=>index+9);
+var workHours = Array.from({length: 9}, (_, index) => index + 9 );
+console.log(workHours);
 
-//function to generate time blocks
+//Creates variable to get current time 
+var currentHour = dayjs().hour(); 
+console.log(currentHour);
+
+// Creating variables for each time block
+const hourNine = $("#hour-9");
+const hourTen = $("#hour-10");
+const hourEleven = $("#hour-11");
+const hourTwelve = $("#hour-12");
+const hourThirteen = $("#hour-13");
+const hourFourteen = $("#hour-14");
+const hourFifteen = $("#hour-15");
+const hourSixteen = $("#hour-16");
+const hourSeventeen = $("#hour-17");
+// Function to generate time blocks
 function timeBlockGenerator(){
   const $main = $('main');
 
   workHours.forEach( (hour)=>{
-    const $timeBlock = $("<div>");
-    const $hour = $("<div>").text('${hour}:00');
-    const $textArea = $('<textarea>');
-
-    const curentHour = dayjs().hour();
-
+    var $timeBlock = $("<div>").addClass("time-block");
+    var $hour = $("<div>").addClass("hour").text(`${hour}:00`);
+    var $textArea = $("<textarea>").addClass("description");
+    var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1 ");
     
+    if (hour < currentHour){
+      $timeBlock.addClass("past");
+    } else if (hour === currentHour){
+      $timeBlock.addClass("present");
+    }else{ $timeBlock.addClass("future");
+  }
+
+  var savedEvents = localStorage.getItem(`event-${hour}`);
+  if (savedEvents){
+    $textArea.val(savedEvents);
+
+  }
+  
+  $timeBlock.append($hour, $textArea, saveBtn);
+  $main.append($timeBlock);
+
   })
 }
+
+timeBlockGenerator();
 })  
+
 
 
 $(function () {
