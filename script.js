@@ -24,11 +24,76 @@ const hourFourteen = $("#hour-14");
 const hourFifteen = $("#hour-15");
 const hourSixteen = $("#hour-16");
 const hourSeventeen = $("#hour-17");
+const btnIcon = $("<i>").addClass("fas fa-save");
+btnIcon.ariaHidden = "true"; //setAttribute("ariaHidden", "true");  // add: aria-hidden ="true"
+
+
+function timeBlockGen(){
+
+  const $main = $('main');
+
+workHours.forEach( (hour)=>{
+  var timeBlock = $("<div>").addClass("row time-block");
+  $(timeBlock).attr('id', 'hour-' + hour);
+
+  var hourBlock = $("<div>").addClass("col-2 col-md-1 hour text-center py-3" );
+  var textArea = $("<textarea>").addClass("col-8 col-md-10 description");
+  textArea.rows = "3";
+  console.log(textArea);
+  var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1");
+  saveBtn.ariaLabel = "save";
+  
+  
+
+  timeBlock.append(hourBlock)
+
+
+
+
+})
+
+}
+timeBlockGen(); 
+
+//_______________________Trial 1________________________________
 // Function to generate time blocks
 function timeBlockGenerator(){
+
   const $main = $('main');
 
   workHours.forEach( (hour)=>{
+    if (currentHour == 9 ){
+      hourNine.addClass("present");
+      hourTen.addClass("future");
+      hourEleven.addClass("future");
+      hourTwelve.addClass("future");
+      hourThirteen.addClass("future");
+      hourFourteen.addClass('future');
+      hourFifteen.addClass('future') ;
+      hourSixteen.addClass('future');
+      hourSeventeen.addClass('future');
+
+    }else if (currentHour == 10){
+      hourNine.removeClass();
+      hourNine.addClass("row time-block past");
+      hourTen.addClass("row time-block present");
+      hourEleven.addClass("row time-block future");
+      hourTwelve.addClass(" row time-block future");
+      hourThirteen.addClass("row time-block future");
+      hourFourteen.addClass('row time-block future');
+      hourFifteen.addClass(' row time-block future') ;
+      hourSixteen.addClass('row time-block future');
+      hourSeventeen.addClass('row time-block future');
+    }
+
+  })
+  timeBlockGenerator();
+  //_________Trial 1_______________________________________________
+
+
+  /*workHours.forEach( (hour)=>{
+
+  
     var $timeBlock = $("<div>").addClass("time-block");
     var $hour = $("<div>").addClass("hour").text(`${hour}:00`);
     var $textArea = $("<textarea>").addClass("description");
@@ -50,15 +115,15 @@ function timeBlockGenerator(){
   $timeBlock.append($hour, $textArea, saveBtn);
   $main.append($timeBlock);
 
-  })
+  })*/
 }
 
-timeBlockGenerator();
+//timeBlockGenerator();
 })  
 
 
 
-$(function () {
+/*$(function () {
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -77,4 +142,4 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-});
+});*/
