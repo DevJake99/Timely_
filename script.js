@@ -1,6 +1,8 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+var currentHour = dayjs().hour();
+
 $(document).ready(function(){
   //get current date and time using Day.js
   const currentDate = dayjs().format('dddd, MMMM D, YYYY');
@@ -9,6 +11,17 @@ $(document).ready(function(){
 // Create time blocks for standard business hours (9-5)
 var workHours = Array.from({length: 9}, (_, index) => index + 9 );
 console.log(workHours);
+var workHour = [];
+
+workHours.forEach( (hour) =>{
+  if (hour <= 12 ){
+     workHour.push(hour); 
+  } else{
+    workHour.push(hour - 12);
+  }
+});
+console.log( "workHour = " + workHour);
+
 
 //Creates variable to get current time 
 var currentHour = dayjs().hour(); 
@@ -28,100 +41,62 @@ const btnIcon = $("<i>").addClass("fas fa-save");
 btnIcon.ariaHidden = "true"; //setAttribute("ariaHidden", "true");  // add: aria-hidden ="true"
 
 
-function timeBlockGen(){
-
+/*function timeBlockGen(){
   const $main = $('main');
+  workHours.forEach( (hour)=>{
+    var timeBlock = $("<div>").addClass("row time-block");
+    $(timeBlock).attr('id', 'hour-' + hour);
 
-workHours.forEach( (hour)=>{
-  var timeBlock = $("<div>").addClass("row time-block");
-  $(timeBlock).attr('id', 'hour-' + hour);
+    var hourBlock = $("<div>").addClass("col-2 col-md-1 hour text-center py-3");
+    var timeForhourBlock = $("#hour");
 
-  var hourBlock = $("<div>").addClass("col-2 col-md-1 hour text-center py-3" );
-  var textArea = $("<textarea>").addClass("col-8 col-md-10 description");
-  textArea.rows = "3";
-  console.log(textArea);
-  var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1");
-  saveBtn.ariaLabel = "save";
+
+    var textArea = $("<textarea>").addClass("col-8 col-md-10 description");
+    textArea.rows = "3";
+    console.log(textArea);
+    var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1");
+    saveBtn.ariaLabel = "save";
   
-  
 
-  timeBlock.append(hourBlock)
-
-
-
+    timeBlock.append(hourBlock);
 
 })
 
 }
-timeBlockGen(); 
-
-//_______________________Trial 1________________________________
-// Function to generate time blocks
-function timeBlockGenerator(){
-
-  const $main = $('main');
-
-  workHours.forEach( (hour)=>{
-    if (currentHour == 9 ){
-      hourNine.addClass("present");
-      hourTen.addClass("future");
-      hourEleven.addClass("future");
-      hourTwelve.addClass("future");
-      hourThirteen.addClass("future");
-      hourFourteen.addClass('future');
-      hourFifteen.addClass('future') ;
-      hourSixteen.addClass('future');
-      hourSeventeen.addClass('future');
-
-    }else if (currentHour == 10){
-      hourNine.removeClass();
-      hourNine.addClass("row time-block past");
-      hourTen.addClass("row time-block present");
-      hourEleven.addClass("row time-block future");
-      hourTwelve.addClass(" row time-block future");
-      hourThirteen.addClass("row time-block future");
-      hourFourteen.addClass('row time-block future');
-      hourFifteen.addClass(' row time-block future') ;
-      hourSixteen.addClass('row time-block future');
-      hourSeventeen.addClass('row time-block future');
-    }
-
-  })
-  timeBlockGenerator();
-  //_________Trial 1_______________________________________________
+timeBlockGen(); */
 
 
-  /*workHours.forEach( (hour)=>{
-
-  
-    var $timeBlock = $("<div>").addClass("time-block");
-    var $hour = $("<div>").addClass("hour").text(`${hour}:00`);
-    var $textArea = $("<textarea>").addClass("description");
-    var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1 ");
-    
-    if (hour < currentHour){
-      $timeBlock.addClass("past");
-    } else if (hour === currentHour){
-      $timeBlock.addClass("present");
-    }else{ $timeBlock.addClass("future");
-  }
-
-  var savedEvents = localStorage.getItem(`event-${hour}`);
-  if (savedEvents){
-    $textArea.val(savedEvents);
-
-  }
-  
-  $timeBlock.append($hour, $textArea, saveBtn);
-  $main.append($timeBlock);
-
-  })*/
-}
-
-//timeBlockGenerator();
 })  
 
 
+function timeBlockIndicator(){
+  // select all time block divs
+  var timeBlock = document.getElementsByClassName('time-block');
+  console.log("timeBlock: " + timeBlock );
+  
+  // iterate through each div
+  for ( var i = 0; i < timeBlock.length; i++){
+
+    var divi = timeBlock[i];
+    // identify each id and isolate their id
+    var divid = divi.id;
+    console.log ("divid: " + divid);
+    
+    var timeKey = parseInt(divid.split("-")[1]);
+    console.log("time key: " + timeKey);
+    
+    // check compare number in id to current hour
+    
+    if (timeKey < currentHour ){
+      $(divi).addClass("past");
+    }else if (timeKey = currentHour){
+      $(divi).addClass("present");
+    }else{
+      $(divi).addClass("future");
+    }
+  }
+}
+timeBlockIndicator();
 
 /*$(function () {
   // TODO: Add a listener for click events on the save button. This code should
