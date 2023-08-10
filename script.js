@@ -104,20 +104,13 @@ $('.btn').on("click", function(event){
   // gets value from local storage and stores that into txtAreaContent
   txtAreaContent = localStorage.getItem(divIdd);
 
+  $(txtArea).val(localStorage.getItem(divIdd));
+
   console.log('txtAreaContent: ' + txtAreaContent); // string entered into txtArea
   console.log('CurrentTxtArea: ' + txtArea);
 
   var storageKeys;
 
-  // var textArea = $("btn").prev().value;
-  // var curBtn = $('btn').parent().id;
-  // localStorage.setItem(curBtn, textArea);
-  // txtAreaShow = $('btn').prev
-  // txtAreaShow.val("")
-  
-  // console.log("textArea: " + textArea);
-  //event.target;
-  //$("description").localStorage.setItem(divi, userInput);
 
 
 });
