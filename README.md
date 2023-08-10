@@ -1,6 +1,7 @@
 # Timely_
 
 ## About the Project
+Live URL - https://devjake99.github.io/Timely_/
 
 This project allows the user to log text into a text box, which will then save to local storage. The text will be displayed even after the page is refreshed or 
 revisisted. 
