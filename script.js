@@ -41,44 +41,19 @@ const btnIcon = $("<i>").addClass("fas fa-save");
 btnIcon.ariaHidden = "true"; //setAttribute("ariaHidden", "true");  // add: aria-hidden ="true"
 
 
-/*function timeBlockGen(){
-  const $main = $('main');
-  workHours.forEach( (hour)=>{
-    var timeBlock = $("<div>").addClass("row time-block");
-    $(timeBlock).attr('id', 'hour-' + hour);
-
-    var hourBlock = $("<div>").addClass("col-2 col-md-1 hour text-center py-3");
-    var timeForhourBlock = $("#hour");
-
-
-    var textArea = $("<textarea>").addClass("col-8 col-md-10 description");
-    textArea.rows = "3";
-    console.log(textArea);
-    var saveBtn = $("<button>").addClass("btn saveBtn col-2 col-md-1");
-    saveBtn.ariaLabel = "save";
-  
-
-    timeBlock.append(hourBlock);
-
-})
-
-}
-timeBlockGen(); */
-
-
 })  
 
+// select all time block divs
+var timeBlock = document.getElementsByClassName('time-block');
+console.log("timeBlock: " + timeBlock );
 
 function timeBlockIndicator(){
-  // select all time block divs
-  var timeBlock = document.getElementsByClassName('time-block');
-  console.log("timeBlock: " + timeBlock );
   
   // iterate through each div
   for ( var i = 0; i < timeBlock.length; i++){
 
     var divi = timeBlock[i];
-    // identify each id and isolate their id
+    // identify each time blokc div and isolate their id
     var divid = divi.id;
     console.log ("divid: " + divid);
     
@@ -89,14 +64,63 @@ function timeBlockIndicator(){
     
     if (timeKey < currentHour ){
       $(divi).addClass("past");
-    }else if (timeKey = currentHour){
+    }else if (timeKey == currentHour){
       $(divi).addClass("present");
     }else{
       $(divi).addClass("future");
     }
   }
+
+
 }
 timeBlockIndicator();
+
+$('.btn').on("click", function(event){
+  event.preventDefault();
+  var parentEl = ''; // the div containing the button
+  var iconSelected = event.target; // Could be the icon or the button, if statemt willl decide
+  //console.log("iconSelected: " + iconSelected); // [object HTMLButtonElement]
+  var txtArea;
+
+
+  // if statement to trigger selection of the buttons pertaining div element 
+  if (iconSelected.tagName == "I"){
+    parentEl = $(iconSelected).parent().parent();
+    //console.log('parentEl: ' + parentEl);
+    txtArea = $(iconSelected).parent().prev().val();
+  }else {
+    parentEl = $(iconSelected).parent() ;
+    txtArea = $(iconSelected).prev().val();
+  }
+  //console.log("icon selected: " + iconSelected); [object HTMLButtonElement]
+  console.log("textArea: " + txtArea); 
+  console.log('parentEl: ' + JSON.stringify(parentEl));
+
+  // Get the id of the parentEl and set it as a key in local storage
+  var divIdd = $(parentEl).attr("id");
+  console.log('divIdd: ' + divIdd);
+  localStorage.setItem(divIdd, txtArea);
+
+  // gets value from local storage and stores that into txtAreaContent
+  txtAreaContent = localStorage.getItem(divIdd);
+
+  console.log('txtAreaContent: ' + txtAreaContent); // string entered into txtArea
+  console.log('CurrentTxtArea: ' + txtArea);
+
+  var storageKeys;
+
+  // var textArea = $("btn").prev().value;
+  // var curBtn = $('btn').parent().id;
+  // localStorage.setItem(curBtn, textArea);
+  // txtAreaShow = $('btn').prev
+  // txtAreaShow.val("")
+  
+  // console.log("textArea: " + textArea);
+  //event.target;
+  //$("description").localStorage.setItem(divi, userInput);
+
+
+});
 
 /*$(function () {
   // TODO: Add a listener for click events on the save button. This code should
