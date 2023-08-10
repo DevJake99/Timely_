@@ -71,49 +71,49 @@ function timeBlockIndicator(){
     }
   }
 
+  $('.btn').on("click", function(event){
+    event.preventDefault();
+    var parentEl = ''; // the div containing the button
+    var iconSelected = event.target; // Could be the icon or the button, if statemt willl decide
+    //console.log("iconSelected: " + iconSelected); // [object HTMLButtonElement]
+    var txtArea;
+  
+  
+    // if statement to trigger selection of the buttons pertaining div element 
+    if (iconSelected.tagName == "I"){
+      parentEl = $(iconSelected).parent().parent();
+      //console.log('parentEl: ' + parentEl);
+      txtArea = $(iconSelected).parent().prev().val();
+    }else {
+      parentEl = $(iconSelected).parent() ;
+      txtArea = $(iconSelected).prev().val();
+    }
+    //console.log("icon selected: " + iconSelected); [object HTMLButtonElement]
+    console.log("textArea: " + txtArea); 
+    console.log('parentEl: ' + JSON.stringify(parentEl));
+  
+    // Get the id of the parentEl and set it as a key in local storage
+    var divIdd = $(parentEl).attr("id");
+    console.log('divIdd: ' + divIdd);
+    localStorage.setItem(divIdd, txtArea);
+  
+    // gets value from local storage and stores that into txtAreaContent
+    txtAreaContent = localStorage.getItem(divIdd);
+  
+    $(txtArea).val(localStorage.getItem(divIdd));
+  
+    console.log('txtAreaContent: ' + txtAreaContent); // string entered into txtArea
+    console.log('CurrentTxtArea: ' + txtArea);
+  
+    var storageKeys;
+  
+  
+  
+  });
 
 }
 timeBlockIndicator();
 
-$('.btn').on("click", function(event){
-  event.preventDefault();
-  var parentEl = ''; // the div containing the button
-  var iconSelected = event.target; // Could be the icon or the button, if statemt willl decide
-  //console.log("iconSelected: " + iconSelected); // [object HTMLButtonElement]
-  var txtArea;
-
-
-  // if statement to trigger selection of the buttons pertaining div element 
-  if (iconSelected.tagName == "I"){
-    parentEl = $(iconSelected).parent().parent();
-    //console.log('parentEl: ' + parentEl);
-    txtArea = $(iconSelected).parent().prev().val();
-  }else {
-    parentEl = $(iconSelected).parent() ;
-    txtArea = $(iconSelected).prev().val();
-  }
-  //console.log("icon selected: " + iconSelected); [object HTMLButtonElement]
-  console.log("textArea: " + txtArea); 
-  console.log('parentEl: ' + JSON.stringify(parentEl));
-
-  // Get the id of the parentEl and set it as a key in local storage
-  var divIdd = $(parentEl).attr("id");
-  console.log('divIdd: ' + divIdd);
-  localStorage.setItem(divIdd, txtArea);
-
-  // gets value from local storage and stores that into txtAreaContent
-  txtAreaContent = localStorage.getItem(divIdd);
-
-  $(txtArea).val(localStorage.getItem(divIdd));
-
-  console.log('txtAreaContent: ' + txtAreaContent); // string entered into txtArea
-  console.log('CurrentTxtArea: ' + txtArea);
-
-  var storageKeys;
-
-
-
-});
 
 /*$(function () {
   // TODO: Add a listener for click events on the save button. This code should
